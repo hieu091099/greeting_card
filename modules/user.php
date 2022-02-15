@@ -95,3 +95,4 @@ $rs  = odbc_exec($con, $sql);
         </thead>
     </table>
 <?php require('../footer.php'); ?>
+<script src="assets/js/pages/user.js"></script>
