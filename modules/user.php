@@ -21,9 +21,9 @@ require('../connect.php');
 </div>
 <!-- [ breadcrumb ] end -->
  <!-- [ title ] -->
- <h4>
+ <!-- <h4>
 	 List User
- </h4>
+ </h4> -->
  <!-- [ end title ] -->
 <?php
 $sql = "SELECT * FROM GC_Users";
@@ -83,7 +83,7 @@ $rs  = odbc_exec($con, $sql);
 </div>
 <!-- Full Height Modal Right -->
 
-<table id="tb_user" class="table table-striped table-bordered" style="width:100%">
+<table id="tb_user" class="table table-striped table-bordered " style="width:100%">
         <thead>
             <tr>
                 <th>Username</th>
@@ -93,6 +93,22 @@ $rs  = odbc_exec($con, $sql);
                 <th>Created At</th>
             </tr>
         </thead>
+		<!-- <?php while(odbc_fetch_row($rs)){ 
+			$username = odbc_result($rs, 'username');
+			$email = odbc_result($rs, 'email');
+			$displayName = odbc_result($rs, 'displayName');
+			$userCreated = odbc_result($rs, 'userCreated');
+			$createdAt = odbc_result($rs, 'createdAt');
+		?>
+		<tbody>
+			<td><?php echo $username; ?></td>
+			<td><?php echo $displayName; ?></td>
+			<td><?php echo $email; ?></td>
+			<td><?php echo $userCreated; ?></td>
+			<td><?php echo $createdAt; ?></td>
+
+		</tbody>
+		<?php } ?> -->
     </table>
 <?php require('../footer.php'); ?>
 <script src="assets/js/pages/user.js"></script>

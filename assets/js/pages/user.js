@@ -12,7 +12,7 @@ toastr.options = {
 }
 $(document).ready(() => {
 
-
+    // $("#tb_user").DataTable()
     loadUser();
 
 })
@@ -83,10 +83,17 @@ function addUser() {
 }
 
 function editUser() {
-    $('#modalUser').modal('show');
-    $('#modalUserTitle').html('Edit User');
-    let tblData = tableUser.rows('.selected').data();
-    toastr.success('Are you the 6 fingered man?', 'Miracle Max Says')
+
+    let table = $("#tb_user").DataTable();
+    let row = getSelectedRow(table);
+    console.log(row)
+    if (row == undefined) {
+        toastr.warning('Please choose a user!', 'Info')
+    } else {
+        $('#modalUser').modal('show');
+        $('#modalUserTitle').html('Edit User');
+
+    }
 }
 function removeUser() {
     let table = $("#tb_user").DataTable();
@@ -94,23 +101,28 @@ function removeUser() {
     console.log(row);
     // let tblData = tableUser.rows('.selected').data();
     // console.log(tblData[0][1]);
-    $.ajax({
-        url: 'data/main.php?action=removeUser',
-        data: { "username": row.username },
-        type: 'POST',
-        success: (res) => {
-            response = JSON.parse(res);
-            console.log(response);
-            if (response.status == true) {
-                toastr.success(response.msg, 'Info', {
-                    timeOut: 800
-                })
-                $("#tb_user").DataTable().ajax.reload();
-            } else {
-                toastr.error(response.msg, 'Info')
+    if (row == undefined) {
+        toastr.warning('Please choose a user!', 'Info')
+    } else {
+        $.ajax({
+            url: 'data/main.php?action=removeUser',
+            data: { "username": row.username },
+            type: 'POST',
+            success: (res) => {
+                response = JSON.parse(res);
+                console.log(response);
+                if (response.status == true) {
+                    toastr.success(response.msg, 'Info', {
+                        timeOut: 800
+                    })
+                    $("#tb_user").DataTable().ajax.reload();
+                } else {
+                    toastr.error(response.msg, 'Info')
+                }
             }
-        }
-    })
+        })
+    }
+
 }
 function getSelectedRow(table) {
     return table.rows('.selected').data()[0];
