@@ -1,19 +1,17 @@
 							<!-- [ Main Content ] end -->
-                            </div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- [ Main Content ] end -->
-   
-    <!-- <div class="row">
+							</div>
+							</div>
+							</div>
+							</div>
+							</div>
+							</div>
+							<!-- [ Main Content ] end -->
+
+							<!-- <div class="row">
         <div>test</div>
     </div> -->
-	
-	<!-- Warning Section Ends -->
 
-	
+							<!-- Warning Section Ends -->
 
 
 

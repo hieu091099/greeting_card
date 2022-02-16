@@ -32,4 +32,3 @@
         $mail       = "Thu";
         $system     = "He Thong";
     }
-?>
