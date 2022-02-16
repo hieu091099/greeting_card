@@ -119,7 +119,7 @@
 		<a class="mobile-menu" id="mobile-header" style="cursor:pointer" >
 			<i class="feather icon-more-horizontal"></i>
 		</a>
-		<div class="collapse navbar-collapse">
+		<div class="collapse navbar-collapse" style="height:60px">
 			<a href="#!" class="mob-toggler"></a>
 			<!-- <ul class="navbar-nav mr-auto">
 				<li class="nav-item">
@@ -137,7 +137,7 @@
 				</li>
 			</ul> -->
 			<ul class="navbar-nav ml-auto">
-				<li>
+				<li style="line-height:0">
 					<div class="dropdown">
 						<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon feather icon-bell"></i></a>
 						<div class="dropdown-menu dropdown-menu-right notification">

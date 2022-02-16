@@ -83,12 +83,12 @@ strong {
 .img-radius {
   border-radius: 50%;
 }
-label.error{
-  color:red;
-  display:block;
-  width:100%;
-  font-weight:bold;
-  margin-top:4px;
+label.error {
+  color: red;
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  margin-top: 4px;
 }
 .page-header {
   background: transparent;
@@ -593,7 +593,7 @@ pre[class*="language-"]:before {
 }
 
 /* table css */
- table.table td {
+table.table td {
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 13px;
@@ -602,7 +602,8 @@ pre[class*="language-"]:before {
 .table-borderless tbody tr th {
   border: 0;
 }
-tr.selected, tr.selected td{
+tr.selected,
+tr.selected td {
   background-color: #6274e1 !important;
 }
 @media only screen and (max-width: 400px) {
@@ -2058,7 +2059,7 @@ tr.selected, tr.selected td{
 }
 
 .pcoded-header .navbar-nav > li {
-  line-height: 60px;
+  /* line-height: 60px; */
   display: inline-block;
   padding: 0 12px;
 }

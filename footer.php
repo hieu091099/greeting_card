@@ -29,6 +29,7 @@
 	<script src="assets/js/mdb.min.js"></script>
 	<script src="assets/js/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script src="assets/js/index.js"></script>
 	
 	
 </body>
