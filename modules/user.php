@@ -83,7 +83,7 @@ $rs  = odbc_exec($con, $sql);
 </div>
 <!-- Full Height Modal Right -->
 
-<table id="tb_user" class="table table-striped table-bordered " style="width:100%">
+<table id="tb_user" class="table table-striped table-bordered table-responsive-md" style="width:100%">
         <thead>
             <tr>
                 <th>Username</th>

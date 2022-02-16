@@ -36,6 +36,7 @@
 	<!-- vendor css -->
 	 <!-- Material Design Bootstrap -->
 	<link rel="stylesheet" href="assets/css/mdb.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="assets/DataTables/datatables.min.css">
 	<link rel="stylesheet" href="assets/DataTables/FixedHeader-3.2.1/css/fixedHeader.bootstrap4.min.css">
 	<link rel="stylesheet" href="assets/css/style.css">

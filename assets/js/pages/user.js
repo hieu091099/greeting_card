@@ -145,6 +145,4 @@ function loadUser() {
         ],
         select: true
     });
-
-
 }
