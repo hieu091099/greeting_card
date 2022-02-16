@@ -31,15 +31,14 @@ $rs  = odbc_exec($con, $sql);
 ?>
 <div class="button-function mb-2">
     <!-- Button trigger modal -->
-    <button class="btn btn-primary mr-0" onclick="addUser()">Add</button>
+    <button class="btn btn-primary mr-0" onclick="add()">Add</button>
     <button class="btn btn-info mr-0" onclick="editUser()">Edit</button>
-    <button class="btn btn-danger mr-0" onclick="removeUser()">Remove</button>
+    <button class="btn btn-danger mr-0" onclick="remove()">Remove</button>
 </div>
 
 
 <!-- Modal User Modal Right -->
-<div class="modal fade right" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="modalUserTitle"
-    aria-hidden="true">
+<div class="modal fade right" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="modalUserTitle" aria-hidden="true">
     <form id="create_user">
         <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
         <div class="modal-dialog modal-full-height modal-right" role="document">
@@ -55,24 +54,28 @@ $rs  = odbc_exec($con, $sql);
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="text" class="form-control" name="username" aria-describedby="emailHelp"
-                            placeholder="Enter username">
+                        <label for="exampleInputEmail1">Year</label>
+                        <select class="form-select form-control" name="year" id="year">
+                            <?php for ($i = 2022; $i < 2030; $i++) { ?>
+                                <option value="<?= $i ?>"><?= $i ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Password</label>
-                        <input type="password" class="form-control" name="password" aria-describedby="emailHelp"
-                            placeholder="Enter password">
+                        <label for="exampleInputEmail1">Version</label>
+                        <input type="number" class="form-control" name="version" id="version" aria-describedby="emailHelp" placeholder="Enter Version">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Display Name</label>
-                        <input type="text" class="form-control" name="displayName" aria-describedby="emailHelp"
-                            placeholder="Enter display name">
+                        <label for="exampleInputEmail1">Image</label>
+                        <input class="form-control" type="file" id="filebg" name="filebg">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" class="form-control" name="email" aria-describedby="emailHelp"
-                            placeholder="Enter email">
+                        <label for="exampleInputEmail1">Is Default</label>
+                        <select class="form-select form-control" name="isdefault" id="isdefault">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+
+                        </select>
                     </div>
 
                 </div>
