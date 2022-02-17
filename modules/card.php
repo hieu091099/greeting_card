@@ -95,6 +95,7 @@ $rs  = odbc_exec($con, $sql);
             <th>Is Default</th>
             <th>Created By</th>
             <th>Created At</th>
+            <th></th>
 
         </tr>
     </thead>

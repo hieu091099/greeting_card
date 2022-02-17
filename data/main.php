@@ -102,3 +102,8 @@ if ($action == "getImageDefault") {
     $res = getImageDefault($_POST['year']);
     print_r($res);
 }
+
+if ($action == 'updatedefaultbg') {
+    $res = updatedefaultbg($_POST['idbg'], $_POST['year']);
+    echo $res;
+}

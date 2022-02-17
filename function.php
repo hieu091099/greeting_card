@@ -300,4 +300,16 @@ function removeCustomer($fullName, $birthday, $email)
         return  json_encode(array('status' => false, 'msg' => 'Data error!'));
     }
 }
-    // return $result;
+// return $result;
+function updatedefaultbg($id, $year)
+{
+    global $con;
+    $sql = "UPDATE GC_Background SET isDefault = 0 WHERE year= $year;UPDATE GC_Background SET isDefault = 1 WHERE id= $id";
+    // echo $sql;
+    $rs = odbc_exec($con, $sql);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Update success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}

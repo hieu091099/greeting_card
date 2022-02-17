@@ -119,6 +119,25 @@ function remove() {
 function getSelectedRow(table) {
     return table.rows('.selected').data()[0];
 }
+function setdefault(id,year){
+    $.ajax({
+        url: 'data/main.php?action=updatedefaultbg',
+        data: { "idbg": id,year:year },
+        type: 'POST',
+        success: (res) => {
+            response = JSON.parse(res);
+            console.log(response);
+            if (response.status == true) {
+                toastr.success(response.msg, 'Info', {
+                    timeOut: 800
+                })
+                $("#tb_user").DataTable().ajax.reload();
+            } else {
+                toastr.error(response.msg, 'Info')
+            }
+        }
+    });
+}
 function loaddata() {
     $('#tb_user').DataTable({
         "ajax": {
@@ -159,7 +178,20 @@ function loaddata() {
                     // return `<img class='rvimg' src="./uploads/${data}" />`;
                 },
                 "targets": 3
-            },
+            },{
+                // The `data` parameter refers to the data for the cell (defined by the
+                // `data` option, which defaults to the column being worked with, in
+                // this case `data: 0`.
+                "render": function (data, type, row) {
+                    if(row.isDefault == 0){
+                     
+                    return ` <button type="button" class="btn btn-secondary" onclick='setdefault(${row.id},${row.year})'>Set Default</button>`;
+                }else{
+                    return '';
+                }
+                },
+                "targets": 6
+            }
         ]
     });
 
