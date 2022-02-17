@@ -26,7 +26,7 @@ require('../connect.php');
 </h4>
 <!-- [ end title ] -->
 <?php
-$sql = "SELECT * FROM GC_Users";
+$sql = "SELECT * FROM GC_Background";
 $rs  = odbc_exec($con, $sql);
 ?>
 <div class="button-function mb-2">
@@ -34,12 +34,13 @@ $rs  = odbc_exec($con, $sql);
     <button class="btn btn-primary mr-0" onclick="add()">Add</button>
     <button class="btn btn-info mr-0" onclick="editUser()">Edit</button>
     <button class="btn btn-danger mr-0" onclick="remove()">Remove</button>
+   
 </div>
 
 
 <!-- Modal User Modal Right -->
 <div class="modal fade right" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="modalUserTitle" aria-hidden="true">
-    <form id="create_user">
+    <form id="create_bg" enctype="multipart/form-data">
         <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
         <div class="modal-dialog modal-full-height modal-right" role="document">
             <div class="modal-content">
@@ -67,11 +68,11 @@ $rs  = odbc_exec($con, $sql);
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Image</label>
-                        <input class="form-control" type="file" id="filebg" name="filebg">
+                        <input class="form-control" type="file" id="filebg" name="image">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Is Default</label>
-                        <select class="form-select form-control" name="isdefault" id="isdefault">
+                        <select class="form-select form-control" name="isDefault" id="isdefault">
                             <option value="0">No</option>
                             <option value="1">Yes</option>
 

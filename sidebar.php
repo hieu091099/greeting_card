@@ -24,7 +24,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/greetingcard/language/language.php');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <base href="http://localhost/greetingcard/">
+    <base href="http://localhost:8088/greetingcard/">
     <!-- Favicon icon -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <!-- fontawesome icon -->

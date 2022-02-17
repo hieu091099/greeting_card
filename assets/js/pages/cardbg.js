@@ -13,15 +13,15 @@ toastr.options = {
 let imgbase64;
 $(document).ready(() => {
     loaddata();
-    $("#filebg").change(function (e) { 
+    $("#filebg").change(function (e) {
         if (this.files && this.files[0]) {
-            var FR= new FileReader();
-            FR.addEventListener("load", function(e) {
-            imgbase64 = e.target.result;
-            console.log(e.target.result);
-            }); 
-            FR.readAsDataURL( this.files[0] );
-          }
+            var FR = new FileReader();
+            FR.addEventListener("load", function (e) {
+                imgbase64 = e.target.result;
+                console.log(e.target.result);
+            });
+            FR.readAsDataURL(this.files[0]);
+        }
     });
 
 })
@@ -29,7 +29,7 @@ $(document).ready(() => {
 function add() {
     $('#modalUser').modal('show');
     $('#modalUserTitle').html('Add New User');
-    $("#create_user").validate({
+    $("#create_bg").validate({
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -57,17 +57,17 @@ function add() {
 
             },
         },
-        submitHandler: function () {
-            let data={
-                year:$('#year').val(),
-                version:$('#version').val(),
-                image:imgbase64,
-                isdefault:$('#isdefault').val(),
-            };
-            console.log(imgbase64);
-                $.ajax({
+        submitHandler: function (data) {
+            // let data = {
+            //     year: $('#year').val(),
+            //     version: $('#version').val(),
+            //     image: imgbase64,
+            //     isdefault: $('#isdefault').val(),
+            // };
+            // console.log({ data });
+            $.ajax({
                 url: 'data/main.php?action=registerbg',
-                data:data,
+                data: data,
                 type: 'POST',
                 success: (res) => {
                     response = JSON.parse(res);
@@ -142,7 +142,7 @@ function loaddata() {
                 // The `data` parameter refers to the data for the cell (defined by the
                 // `data` option, which defaults to the column being worked with, in
                 // this case `data: 0`.
-                "render": function ( data, type, row ) {
+                "render": function (data, type, row) {
                     return `<img src="${data}" />`;
                 },
                 "targets": 2

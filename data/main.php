@@ -44,6 +44,11 @@ if ($action == "removeBg") {
 }
 
 if ($action == "registerbg") {
+    $image = $_POST['image'];
+    $year  = $_POST['year'];
+    $version = $_POST['version'];
+    $isDefault = $_POST['isDefault'];
+    // echo $image.$year;
     $res = registerbg($_POST['year'], $_POST['version'], $_POST['image'], $_POST['isdefault']);
     echo $res;
 }
