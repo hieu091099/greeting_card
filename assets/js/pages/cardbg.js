@@ -147,9 +147,22 @@ function loaddata() {
                     return `<img class='rvimg' src="./uploads/${data}" />`;
                 },
                 "targets": 2
+            },{
+                // The `data` parameter refers to the data for the cell (defined by the
+                // `data` option, which defaults to the column being worked with, in
+                // this case `data: 0`.
+                "render": function ( data, type, row ) {
+                    if(data == 1){
+                        return '✔️';
+                    }else{
+                        return '❌';
+                    }
+                    // return `<img class='rvimg' src="./uploads/${data}" />`;
+                },
+                "targets": 3
             },
         ]
     });
 
-
+    // ☑️❌✖️✔️✅✅
 }

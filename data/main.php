@@ -51,3 +51,25 @@ if ($action == "registerbg") {
     $res = registerbg($_POST['year'], $_POST['version'],  $_FILES['filebg']['name'], $_POST['isdefault']);
     header('Location: ../modules/card.php');
 }
+
+if ($action == "addcontent") {
+    // echo $_POST['mailsj'];
+    $res = addcontent($_POST['year'], $_POST['version'], $_POST['content'], $_POST['mailsj'], $_POST['box']);
+    echo $res;
+}
+
+if ($action == "showcontentcard") {
+    $res = getContent();
+    echo $res;
+}
+if ($action == "editcontent") {
+    // echo $_POST['mailsj'];
+    $res = editcontent($_POST['id'], $_POST['year'], $_POST['version'], $_POST['content'], $_POST['mailsj'], $_POST['box']);
+    echo $res;
+}
+
+if ($action == "getImageDefault") {
+    // echo $_POST['mailsj'];
+    $res = getImageDefault($_POST['year']);
+    print_r($res);
+}

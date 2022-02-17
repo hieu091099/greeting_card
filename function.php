@@ -135,3 +135,87 @@ function registerbg($year, $verion, $image, $default)
         return  json_encode(array('status' => false, 'msg' => 'Data error!'));
     }
 }
+function addcontent($year, $verion, $content, $mailsj, $box)
+{
+    global $con;
+    $content = htmlspecialchars($content);
+    $content =  str_replace("'", '"', $content);
+    $box = htmlspecialchars($box);
+    $box =  str_replace("'", '"', $box);
+    $sql = "INSERT INTO GC_CardContent
+    (
+        [year],
+        version,
+        [content],
+        mailSubject,
+        box,
+        createdBy,
+        createdAt
+        
+    )
+    VALUES
+    (
+        '$year',
+        '$verion',
+        '$content',
+        '$mailsj',
+        '$box',
+        'nam',
+       GETDATE()
+    )";
+    $rs = odbc_exec($con, $sql);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Register success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+
+function getContent()
+{
+    global $con;
+    $result = array();
+    $select = "SELECT * FROM GC_CardContent";
+    $rs = odbc_exec($con, $select);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
+    // return $result;
+}
+
+function editcontent($id, $year, $verion, $content, $mailsj, $box)
+{
+    global $con;
+    $content = htmlspecialchars($content);
+    $content =  str_replace("'", '"', $content);
+    $box = htmlspecialchars($box);
+    $box =  str_replace("'", '"', $box);
+    $sql = "UPDATE GC_CardContent
+    SET
+        -- id -- this column value is auto-generated
+        [year] ='$year',
+        version = '$verion',
+        [content] = '$content',
+        mailSubject = '$mailsj',
+        box = '$box'
+    WHERE id = $id ";
+    $rs = odbc_exec($con, $sql);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Register success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+
+function getImageDefault($year)
+{
+    global $con;
+    $result = array();
+    $sql = "SELECT TOP 1 * FROM GC_Background WHERE YEAR = '$year' AND isDefault = '1'";
+    $rs = odbc_exec($con, $sql);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
+}
