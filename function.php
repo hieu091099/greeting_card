@@ -139,6 +139,92 @@ function registerbg($year, $verion, $image, $default)
     }
 }
 
+
+function addcontent($year, $verion, $content, $mailsj, $box)
+{
+    global $con;
+    $content = htmlspecialchars($content);
+    $content =  str_replace("'", '"', $content);
+    $box = htmlspecialchars($box);
+    $box =  str_replace("'", '"', $box);
+    $sql = "INSERT INTO GC_CardContent
+    (
+        [year],
+        version,
+        [content],
+        mailSubject,
+        box,
+        createdBy,
+        createdAt
+        
+    )
+    VALUES
+    (
+        '$year',
+        '$verion',
+        '$content',
+        '$mailsj',
+        '$box',
+        'nam',
+       GETDATE()
+    )";
+    $rs = odbc_exec($con, $sql);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Register success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+
+function getContent()
+{
+    global $con;
+    $result = array();
+    $select = "SELECT * FROM GC_CardContent";
+    $rs = odbc_exec($con, $select);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
+}
+
+function editcontent($id, $year, $verion, $content, $mailsj, $box)
+{
+    global $con;
+    $content = htmlspecialchars($content);
+    $content =  str_replace("'", '"', $content);
+    $box = htmlspecialchars($box);
+    $box =  str_replace("'", '"', $box);
+    $sql = "UPDATE GC_CardContent
+    SET
+        -- id -- this column value is auto-generated
+        [year] ='$year',
+        version = '$verion',
+        [content] = '$content',
+        mailSubject = '$mailsj',
+        box = '$box'
+    WHERE id = $id ";
+    $rs = odbc_exec($con, $sql);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Register success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+
+function getImageDefault($year)
+{
+    global $con;
+    $result = array();
+    $sql = "SELECT TOP 1 * FROM GC_Background WHERE YEAR = '$year' AND isDefault = '1'";
+    $rs = odbc_exec($con, $sql);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
+}
+
+
 /** customer */
 function getCustomer(){
     global $con;
@@ -148,13 +234,13 @@ function getCustomer(){
     CASE WHEN [status] = 1 THEN 'Active' ELSE 'Quit' END [status],
     CONVERT(VARCHAR, birthday,111) birthdayCus
      FROM GC_Customer ";
-    $rs = odbc_exec($con, $select);
-    while (@$row = odbc_fetch_object($rs)) {
-        array_push($result, $row);
-    };
-    return json_encode($result);
+         $rs = odbc_exec($con, $select);
+         while (@$row = odbc_fetch_object($rs)) {
+             array_push($result, $row);
+         };
+         return json_encode($result);
+     
 }
-
 function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName){
     global $con;
     $createdBy = $_SESSION['username'];
@@ -213,3 +299,6 @@ function removeCustomer($fullName, $birthday, $email){
         return  json_encode(array('status' => false, 'msg' => 'Data error!'));
     }
 }
+    // return $result;
+
+
