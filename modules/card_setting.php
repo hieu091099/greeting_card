@@ -149,7 +149,7 @@
                 // `data` option, which defaults to the column being worked with, in
                 // this case `data: 0`.
                 "render": function(data, type, row) {
-                    data = $('<textarea />').html(row.box + data).text();
+                    data = $('<textarea />').html(data).text();
                     return data;
                 },
                 "targets": 2
