@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require('../function.php');
 // require('../connect.php');
 $action = $_GET['action'];
@@ -44,6 +45,9 @@ if ($action == "removeBg") {
 }
 
 if ($action == "registerbg") {
-    $res = registerbg($_POST['year'], $_POST['version'], $_POST['image'], $_POST['isdefault']);
-    echo $res;
+    $file = $_FILES['filebg']['tmp_name'];
+    $path = "../uploads/" . $_FILES['filebg']['name'];
+    move_uploaded_file($file, $path);
+    $res = registerbg($_POST['year'], $_POST['version'],  $_FILES['filebg']['name'], $_POST['isdefault']);
+    header('Location: ../modules/card.php');
 }

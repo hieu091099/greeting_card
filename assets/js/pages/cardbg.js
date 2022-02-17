@@ -57,34 +57,35 @@ function add() {
 
             },
         },
-        submitHandler: function () {
-            let data={
-                year:$('#year').val(),
-                version:$('#version').val(),
-                image:imgbase64,
-                isdefault:$('#isdefault').val(),
-            };
-            console.log(imgbase64);
-                $.ajax({
-                url: 'data/main.php?action=registerbg',
-                data:data,
-                type: 'POST',
-                success: (res) => {
-                    response = JSON.parse(res);
-                    console.log(response);
-                    if (response.status == true) {
-                        $("#tb_user").DataTable().ajax.reload();
-                        toastr.success(response.msg, 'Info', {
-                            timeOut: 800, onHidden: function () {
-                                $('#modalUser').modal('hide');
-                            }
-                        })
-                    } else {
-                        toastr.error(response.msg, 'Info')
-                    }
-                }
-            })
-        }
+        // submitHandler: function () {
+
+            // let data={
+            //     year:$('#year').val(),modules/card.php
+            //     version:$('#version').val(),
+            //     image:imgbase64,
+            //     isdefault:$('#year').val(),
+
+            // };
+            //     $.ajax({
+            //     url: 'data/main.php?action=registerbg',
+            //     data:data,
+            //     type: 'POST',
+            //     success: (res) => {
+            //         response = JSON.parse(res);
+            //         console.log(response);
+            //         if (response.status == true) {
+            //             $("#tb_user").DataTable().ajax.reload();
+            //             toastr.success(response.msg, 'Info', {
+            //                 timeOut: 800, onHidden: function () {
+            //                     $('#modalUser').modal('hide');
+            //                 }
+            //             })
+            //         } else {
+            //             toastr.error(response.msg, 'Info')
+            //         }
+            //     }
+            // })
+        // }
     });
 }
 
@@ -136,14 +137,14 @@ function loaddata() {
             { "data": "createdBy" },
             { "data": "createdAt" }
         ],
-        select: true,
-        "columnDefs": [
+        select: true
+        ,"columnDefs": [
             {
                 // The `data` parameter refers to the data for the cell (defined by the
                 // `data` option, which defaults to the column being worked with, in
                 // this case `data: 0`.
                 "render": function ( data, type, row ) {
-                    return `<img src="${data}" />`;
+                    return `<img class='rvimg' src="./uploads/${data}" />`;
                 },
                 "targets": 2
             },

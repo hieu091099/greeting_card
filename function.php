@@ -86,12 +86,13 @@ function getBg()
 {
     global $con;
     $result = array();
-    $select = "SELECT * FROM GC_BackGround ";
+    $select = "SELECT * FROM GC_BackGround";
     $rs = odbc_exec($con, $select);
     while (@$row = odbc_fetch_object($rs)) {
         array_push($result, $row);
     };
     return json_encode($result);
+    // return $result;
 }
 
 function removeBg($idbg)
@@ -109,7 +110,6 @@ function removeBg($idbg)
 function registerbg($year, $verion, $image, $default)
 {
     global $con;
-    /** $2y$10$MHvNRd7DQW.b/nNpBxpCLuiT7otwaD8pInyPL1SuYCoGOLa3bgHQ6 => abc123 */
     $insert = "INSERT INTO GC_Background
         (
             [year],
@@ -128,7 +128,6 @@ function registerbg($year, $verion, $image, $default)
             '',
             GETDATE()
         )";
-    echo $insert;
     $rs = odbc_exec($con, $insert);
     if (odbc_num_rows($rs) > 0) {
         return  json_encode(array('status' => true, 'msg' => 'Register success!'));

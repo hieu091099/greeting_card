@@ -9711,3 +9711,7 @@ table.dataTable tbody > tr > .selected th.select-checkbox:after {
     box-shadow: 0 0 0 0 rgba(4, 169, 245, 0);
   }
 }
+.rvimg {
+  width: 300px;
+  height: 150px;
+}
