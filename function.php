@@ -43,14 +43,16 @@ function register($username, $password, $fullName, $email)
 function login($username, $password)
 {
     global $con;
-    $check = "SELECT [password], displayName, isAdmin FROM GC_Users WHERE username = '$username'";
+    $check = "SELECT [password], displayName, isAdmin, username FROM GC_Users WHERE username = '$username'";
     $rs_check = odbc_exec($con, $check);
     if (odbc_num_rows($rs_check) > 0) {
         $password_hash = odbc_result($rs_check, 1);
         if (password_verify($password, $password_hash)) {
             $displayName = odbc_result($rs_check, 2);
             $isAdmin = odbc_result($rs_check, 3);
+            $username = odbc_result($rs_check, 4);
             $_SESSION['displayName'] = $displayName;
+            $_SESSION['username'] = $username;
             $_SESSION['isAdmin'] = $isAdmin;
             return  json_encode(array('status' => true, 'msg' => 'Login success!'));
         }
@@ -86,12 +88,13 @@ function getBg()
 {
     global $con;
     $result = array();
-    $select = "SELECT * FROM GC_BackGround ";
+    $select = "SELECT * FROM GC_BackGround";
     $rs = odbc_exec($con, $select);
     while (@$row = odbc_fetch_object($rs)) {
         array_push($result, $row);
     };
     return json_encode($result);
+    // return $result;
 }
 
 function removeBg($idbg)
@@ -109,7 +112,7 @@ function removeBg($idbg)
 function registerbg($year, $verion, $image, $default)
 {
     global $con;
-    /** $2y$10$MHvNRd7DQW.b/nNpBxpCLuiT7otwaD8pInyPL1SuYCoGOLa3bgHQ6 => abc123 */
+    $createdBy = $_SESSION['username'];
     $insert = "INSERT INTO GC_Background
         (
             [year],
@@ -125,13 +128,87 @@ function registerbg($year, $verion, $image, $default)
             '$verion',
             '$image',
             '$default',
-            '',
+            '$createdBy',
             GETDATE()
         )";
-    echo $insert;
     $rs = odbc_exec($con, $insert);
     if (odbc_num_rows($rs) > 0) {
         return  json_encode(array('status' => true, 'msg' => 'Register success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+
+/** customer */
+function getCustomer(){
+    global $con;
+    $result = array();
+    $select = "SELECT fullName, birthday, email, nameTimezone, departmentName, createdBy, createdAt, jobLevel,
+    CASE WHEN gender = 0 THEN 'Female' ELSE 'Male' END gender, 
+    CASE WHEN [status] = 1 THEN 'Active' ELSE 'Quit' END [status],
+    CONVERT(VARCHAR, birthday,111) birthdayCus
+     FROM GC_Customer ";
+    $rs = odbc_exec($con, $select);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
+}
+
+function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName){
+    global $con;
+    $createdBy = $_SESSION['username'];
+    $sql_check = "SELECT * FROM GC_Customer WHERE fullName = '$fullName' AND birthday = '$birthday'";
+    $rs_check  = odbc_exec($con, $sql_check);
+    if(odbc_num_rows($rs_check) > 0){
+        return  json_encode(array('status' => false, 'msg' => 'Customer already exists!'));
+    }else{
+        $insert = "INSERT INTO GC_Customer
+        (
+            [fullName],
+            [birthday],
+            [email],
+            gender,
+            timezone,
+            nameTimezone,
+            status,
+            jobLevel,
+            relatedDepartment,
+            departmentName,
+            createdBy,
+            createdAt
+        )
+        VALUES
+        (
+            '$fullName',
+            '$birthday',
+            '$email',
+            '$gender',
+            '$timezone',
+            '$nameTimezone',
+            '1',
+            '$jobLevel',
+            '$relatedDepartment',
+            '$departmentName',
+            '$createdBy',
+            GETDATE()
+        )";
+    $rs = odbc_exec($con, $insert);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Add success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+    }
+    
+}
+
+function removeCustomer($fullName, $birthday, $email){
+    global $con;
+    $delete = "DELETE  FROM GC_Customer WHERE fullName = '$fullName' AND birthday = '$birthday' and email = '$email'";
+    $rs = odbc_exec($con, $delete);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Delete success!'));
     } else {
         return  json_encode(array('status' => false, 'msg' => 'Data error!'));
     }

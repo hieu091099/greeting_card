@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require('../function.php');
 // require('../connect.php');
 $action = $_GET['action'];
@@ -44,11 +45,39 @@ if ($action == "removeBg") {
 }
 
 if ($action == "registerbg") {
-    $image = $_POST['image'];
-    $year  = $_POST['year'];
-    $version = $_POST['version'];
-    $isDefault = $_POST['isDefault'];
-    // echo $image.$year;
-    $res = registerbg($_POST['year'], $_POST['version'], $_POST['image'], $_POST['isdefault']);
+    $file = $_FILES['filebg']['tmp_name'];
+    $path = "../uploads/" . $_FILES['filebg']['name'];
+    move_uploaded_file($file, $path);
+    $res = registerbg($_POST['year'], $_POST['version'],  $_FILES['filebg']['name'], $_POST['isdefault']);
+    header('Location: ../modules/card.php');
+}
+
+/** customer */
+if($action == "getCus"){
+    $res = getCustomer();
+    echo $res;
+}
+
+if($action == "addCus"){
+    $fullName = $_POST['fullName'];
+    $birthday = $_POST['birthday'];
+    $email    = $_POST['email'];
+    $gender   = $_POST['gender'];
+    $jobLevel = $_POST['jobPositionLevel'];
+    $timezone = $_POST['timezone'];
+    $nameTimezone = $_POST['nameTimezone'];
+    $relatedDepartment = $_POST['relatedDepartment'];
+    $departmentName = $_POST['departmentName'];
+
+    $res = addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName);
+    echo $res;
+}
+
+if ($action == "removeCus") {
+    $fullName = $_POST['fullName'];
+    $birthday = $_POST['birthday'];
+    $email    = $_POST['email'];
+
+    $res = removeCustomer($fullName, $birthday, $email);
     echo $res;
 }

@@ -22,7 +22,8 @@ require('../connect.php');
 <!-- [ breadcrumb ] end -->
 <!-- [ title ] -->
 <h4>
-    List Background
+    <!-- List Background -->
+    <?php echo 'data:image/jpeg;base64,' . base64_encode(file_get_contents("../assets/images/bg_login.webp")) ?>
 </h4>
 <!-- [ end title ] -->
 <?php
@@ -40,20 +41,17 @@ $rs  = odbc_exec($con, $sql);
 
 <!-- Modal User Modal Right -->
 <div class="modal fade right" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="modalUserTitle" aria-hidden="true">
-    <form id="create_bg" enctype="multipart/form-data">
+    <form id="create_user" action="data/main.php?action=registerbg" method="post" enctype="multipart/form-data">
         <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
         <div class="modal-dialog modal-full-height modal-right" role="document">
             <div class="modal-content">
-
                 <div class="modal-header">
                     <h4 class="modal-title w-100" id="modalUserTitle"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <div class="modal-body">
-
                     <div class="form-group">
                         <label for="exampleInputEmail1">Year</label>
                         <select class="form-select form-control" name="year" id="year">
@@ -75,16 +73,13 @@ $rs  = odbc_exec($con, $sql);
                         <select class="form-select form-control" name="isDefault" id="isdefault">
                             <option value="0">No</option>
                             <option value="1">Yes</option>
-
                         </select>
                     </div>
-
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" id="save" class="btn btn-primary">Save changes</button>
                 </div>
-
             </div>
         </div>
     </form>

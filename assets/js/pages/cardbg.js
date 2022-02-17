@@ -65,6 +65,8 @@ function add() {
             //     isdefault: $('#isdefault').val(),
             // };
             // console.log({ data });
+            let formData = new FormData(data);
+
             $.ajax({
                 url: 'data/main.php?action=registerbg',
                 data: data,
@@ -143,7 +145,8 @@ function loaddata() {
                 // `data` option, which defaults to the column being worked with, in
                 // this case `data: 0`.
                 "render": function (data, type, row) {
-                    return `<img src="${data}" />`;
+                    console.log({ data });
+                    return `<img src="./uploads/${data}" />`;
                 },
                 "targets": 2
             },

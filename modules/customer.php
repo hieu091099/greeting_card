@@ -1,8 +1,6 @@
 <?php require('../sidebar.php'); ?>
-<?php require('../connect.php'); 
-$sql_select = "SELECT [image] FROM GC_Background";
-$rs = odbc_exec($con, $sql_select);
-$test =  odbc_result($rs, 1);?>
+<?php require('../connect.php'); ?>
+
 <!-- [ breadcrumb ] start -->
 <div class="page-header">
 	<div class="page-block">
@@ -26,7 +24,7 @@ $test =  odbc_result($rs, 1);?>
 	<button class="btn btn-info mr-0" onclick="editCus()">Edit</button>
 	<button class="btn btn-danger mr-0" onclick="removeCus()">Remove</button>
 	<div>
-<?php echo $test; ?>
+
 
 	</div>
 </div>
@@ -51,34 +49,39 @@ $test =  odbc_result($rs, 1);?>
 	 
 	  	<div class="form-group">
 			<label for="exampleInputEmail1">Full Name</label>
-			<input type="text" class="form-control" name="fullName" aria-describedby="emailHelp" placeholder="Enter username">
+			<input type="text" class="form-control" name="fullName" id="fullName" aria-describedby="emailHelp" placeholder="Enter full name">
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Birthday</label>
-			<input type="datetime-local" class="form-control" name="birthday" >
+			<input type="date" class="form-control" name="birthday" id="birthday" >
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Email</label>
-			<input type="text" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter display name">
+			<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Gender</label>
-			<select class="form-control" name="gender">
-				<option value="">Male</option>
-				<option value="">Female</option>
+			<select class="form-control" name="gender" id="gender">
+				<option value="0">Female</option>
+				<option value="1">Male</option>
 			</select>
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Job Position Level</label>
-			<input type="text" class="form-control" name="jobPositionLevel" aria-describedby="emailHelp" placeholder="Enter display name">
+			<select class="form-control" name="jobPositionLevel" id="jobPositionLevel">
+				<option value="Senior">Senior</option>
+				<option value="Junior">Junior</option>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Timezone</label>
-			<input type="text" class="form-control" name="timzone" aria-describedby="emailHelp" placeholder="Enter display name">
+			<select class="my-select js-example-basic-single" name="timezone" id="timezone">
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Related Deparment</label>
-			<select class="js-example-basic-multiple" name="relatedDeparment[]" multiple="multiple">
+			<select class="my-select js-example-basic-multiple form-control" name="relatedDeparment[]" id="relatedDeparment" multiple="multiple">
+				<!-- <option value="" disabled>Choose Department</option> -->
 				<?php $sql_deparment = "SELECT * FROM Data_Department";
 					  $rs = odbc_exec($con, $sql_deparment);
 					  while(odbc_fetch_row($rs)){?>

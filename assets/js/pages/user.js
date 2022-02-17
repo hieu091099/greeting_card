@@ -98,9 +98,7 @@ function editUser() {
 function removeUser() {
     let table = $("#tb_user").DataTable();
     let row = getSelectedRow(table);
-    console.log(row);
-    // let tblData = tableUser.rows('.selected').data();
-    // console.log(tblData[0][1]);
+
     if (row == undefined) {
         toastr.warning('Please choose a user!', 'Info')
     } else {

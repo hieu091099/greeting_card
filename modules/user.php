@@ -32,7 +32,7 @@ $rs  = odbc_exec($con, $sql);
 <div class="button-function mb-2">
 	<!-- Button trigger modal -->
 	<button class="btn btn-primary mr-0" onclick="addUser()">Add</button>
-	<button class="btn btn-info mr-0" onclick="editUser()">Edit</button>
+	<!-- <button class="btn btn-info mr-0" onclick="editUser()">Edit</button> -->
 	<button class="btn btn-danger mr-0" onclick="removeUser()">Remove</button>
 </div>
 
