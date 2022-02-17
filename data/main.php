@@ -53,12 +53,12 @@ if ($action == "registerbg") {
 }
 
 /** customer */
-if($action == "getCus"){
+if ($action == "getCus") {
     $res = getCustomer();
     echo $res;
 }
 
-if($action == "addCus"){
+if ($action == "addCus") {
     $fullName = $_POST['fullName'];
     $birthday = $_POST['birthday'];
     $email    = $_POST['email'];

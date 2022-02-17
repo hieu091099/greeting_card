@@ -226,7 +226,8 @@ function getImageDefault($year)
 
 
 /** customer */
-function getCustomer(){
+function getCustomer()
+{
     global $con;
     $result = array();
     $select = "SELECT fullName, birthday, email, nameTimezone, departmentName, createdBy, createdAt, jobLevel,
@@ -234,21 +235,21 @@ function getCustomer(){
     CASE WHEN [status] = 1 THEN 'Active' ELSE 'Quit' END [status],
     CONVERT(VARCHAR, birthday,111) birthdayCus
      FROM GC_Customer ";
-         $rs = odbc_exec($con, $select);
-         while (@$row = odbc_fetch_object($rs)) {
-             array_push($result, $row);
-         };
-         return json_encode($result);
-     
+    $rs = odbc_exec($con, $select);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
 }
-function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName){
+function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName)
+{
     global $con;
     $createdBy = $_SESSION['username'];
     $sql_check = "SELECT * FROM GC_Customer WHERE fullName = '$fullName' AND birthday = '$birthday'";
     $rs_check  = odbc_exec($con, $sql_check);
-    if(odbc_num_rows($rs_check) > 0){
+    if (odbc_num_rows($rs_check) > 0) {
         return  json_encode(array('status' => false, 'msg' => 'Customer already exists!'));
-    }else{
+    } else {
         $insert = "INSERT INTO GC_Customer
         (
             [fullName],
@@ -279,17 +280,17 @@ function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTime
             '$createdBy',
             GETDATE()
         )";
-    $rs = odbc_exec($con, $insert);
-    if (odbc_num_rows($rs) > 0) {
-        return  json_encode(array('status' => true, 'msg' => 'Add success!'));
-    } else {
-        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+        $rs = odbc_exec($con, $insert);
+        if (odbc_num_rows($rs) > 0) {
+            return  json_encode(array('status' => true, 'msg' => 'Add success!'));
+        } else {
+            return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+        }
     }
-    }
-    
 }
 
-function removeCustomer($fullName, $birthday, $email){
+function removeCustomer($fullName, $birthday, $email)
+{
     global $con;
     $delete = "DELETE  FROM GC_Customer WHERE fullName = '$fullName' AND birthday = '$birthday' and email = '$email'";
     $rs = odbc_exec($con, $delete);
@@ -300,5 +301,3 @@ function removeCustomer($fullName, $birthday, $email){
     }
 }
     // return $result;
-
-

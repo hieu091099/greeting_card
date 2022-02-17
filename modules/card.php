@@ -35,7 +35,7 @@ $rs  = odbc_exec($con, $sql);
     <button class="btn btn-primary mr-0" onclick="add()">Add</button>
     <button class="btn btn-info mr-0" onclick="editUser()">Edit</button>
     <button class="btn btn-danger mr-0" onclick="remove()">Remove</button>
-   
+
 </div>
 
 
@@ -66,7 +66,7 @@ $rs  = odbc_exec($con, $sql);
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Image</label>
-                        <input class="form-control" type="file" id="filebg" name="image">
+                        <input class="form-control" type="file" id="filebg" name="filebg">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Is Default</label>
