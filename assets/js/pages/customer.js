@@ -60,7 +60,7 @@ function loadCus() {
 }
 
 function addCus() {
-    clearForm("#create_cus");
+    // clearForm("#create_cus");
     $("#modalCusTitle").html("Add customer")
     $("#modalCus").modal("show");
     $("#create_cus").validate({
@@ -171,25 +171,31 @@ async function editCus() {
 
 
         $("#modalCusTitle").html("Edit customer")
-        await $("#modalCus").modal("show")
+       
 
+    
+        // console.log({ row })
+        // for (let item in row) {
+        //     // if (item == 'gender') {
+        //     //     // if (row[item] == "Female") {
+        //     //     //     console.log('trai');
+        //     //     //     // $(`#${item} option[value='0']`).attr('selected', 'selected');
+        //     //     //    console.log($("#gender option[value='0']").prop('selected'));
+        //     //     // } else {
+        //     //     //     console.log('gai');
 
-        console.log({ row })
-        for (let item in row) {
-            if (item == 'gender') {
-                if (row[item] == "Female") {
-                    // console.log('1');
-                    // $(`#${item} option[value='0']`).attr('selected', 'selected');
-                    $(`#gender`).val(0);
-                } else {
-                    // $(`#${item} option[value='1']`).attr('selected', 'selected');
-                    $(`#gender`).val(1);
+        //     //     //     // $(`#${item} option[value='1']`).attr('selected', 'selected');
+        //     //     //     $("#gender").val(1);
 
-                }
-            }
-            $(`#${item}`).val(row[item]);
-        }
-        $("#birthday").val('2022/02/17')
+        //     //     // }
+        //     // }
+        //     $(`#${item}`).val(row[item]);
+        // }
+      
+
+        $("#modalCus").modal("show");
+        $('#birthday').css('color','red');
+        $("#birthday").val('2022-02-17');
     }
 
 }

@@ -230,7 +230,7 @@ function getCustomer()
 {
     global $con;
     $result = array();
-    $select = "SELECT fullName, birthday, email, nameTimezone, departmentName, createdBy, createdAt, jobLevel,
+    $select = "SELECT id,fullName, birthday, email, nameTimezone, departmentName, createdBy, createdAt, jobLevel,
     CASE WHEN gender = 0 THEN 'Female' ELSE 'Male' END gender, 
     CASE WHEN [status] = 1 THEN 'Active' ELSE 'Quit' END [status],
     CONVERT(VARCHAR, birthday,111) birthdayCus
@@ -324,4 +324,17 @@ function getversion($year, $db)
         $rs = 1;
     }
     return $rs;
+}
+
+function getyearhavecard()
+{
+
+    global $con;
+    $result = [];
+    $sql = "SELECT year FROM GC_Background GROUP BY year";
+    $rs = odbc_exec($con, $sql);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
 }
