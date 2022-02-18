@@ -11,10 +11,7 @@ toastr.options = {
 
 }
 $(document).ready(() => {
-
-    // $("#tb_user").DataTable()
     loadUser();
-
 })
 
 function addUser() {

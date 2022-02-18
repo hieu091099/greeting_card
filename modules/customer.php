@@ -23,10 +23,9 @@
 	<button class="btn btn-primary mr-0" onclick="addCus()">Add</button>
 	<button class="btn btn-info mr-0" onclick="editCus()">Edit</button>
 	<button class="btn btn-danger mr-0" onclick="removeCus()">Remove</button>
-	<div>
+	
+	<input type="hidden" id="id_cus">
 
-
-	</div>
 </div>
 
 <?php  ?>
@@ -46,14 +45,14 @@
       </div>
 	 
       <div class="modal-body">
-	 
+	 	
 	  	<div class="form-group">
 			<label for="exampleInputEmail1">Full Name</label>
 			<input type="text" class="form-control" name="fullName" id="fullName" aria-describedby="emailHelp" placeholder="Enter full name">
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Birthday</label>
-			<input type="date" class="form-control" name="birthday" id="birthday" >
+			<input type="date" class="form-control" name="birthday" id="birthday" style="color:black">
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Email</label>
@@ -92,7 +91,7 @@
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" id="save" class="btn btn-primary">Save changes</button>
+        <button type="submit" id="save"  class="btn btn-primary">Save changes</button>
       </div>
 	 
     </div>
@@ -104,13 +103,16 @@
 <table id="tb_customer" class="table table-striped table-bordered table-responsive-md" style="width:100%">
         <thead>
             <tr>
+				<th>id</th>
                 <th>Full Name</th>
                 <th>Birthday</th>
                 <th>Email</th>
                 <th>Gender</th>
                 <th>Job Position Level</th>
                 <th>Status</th>
+				<th>idTime</th>
                 <th>Timezone</th>
+				<th>idRelatedDepartment</th>
                 <th>Related Deparment</th>
                 <th>Created By</th>
                 <th>Created At</th>

@@ -13,6 +13,7 @@ toastr.options = {
 
 $(document).ready(() => {
     loadCus();
+    // $("#birthday").datepicker();
     $('.js-example-basic-multiple').select2();
     $('.js-example-basic-single').select2();
     $('.my-select').select2({
@@ -32,7 +33,7 @@ $(document).ready(() => {
     })
 
 })
-
+let check = "";
 
 function loadCus() {
     $('#tb_customer').DataTable({
@@ -44,26 +45,37 @@ function loadCus() {
             }
         },
         "columns": [
+            { "data": "id" },
             { "data": "fullName" },
-            { "data": "birthday" },
+            { "data": "birthdayCus" },
             { "data": "email" },
             { "data": "gender" },
             { "data": "jobLevel" },
             { "data": "status" },
+            { "data": "timezone" },
             { "data": "nameTimezone" },
+            { "data": "relatedDepartment" },
             { "data": "departmentName" },
             { "data": "createdBy" },
             { "data": "createdAt" }
+        ],
+        "columnDefs": [
+            {
+                "targets": [0, 7, 9],
+                "visible": false
+            },
+
         ],
         select: true
     });
 }
 
 function addCus() {
+    check = "add";
     clearForm("#create_cus");
     $("#modalCusTitle").html("Add customer")
     $("#modalCus").modal("show");
-    $("#create_cus").validate({
+    let validator = $("#create_cus").validate({
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -119,6 +131,7 @@ function addCus() {
         },
         submitHandler: function () {
 
+
             let department = $('#relatedDeparment').select2("val");
             let selected = $('#relatedDeparment').select2("data");
             let departmentName = [];
@@ -136,33 +149,36 @@ function addCus() {
                 relatedDepartment: department.toString(),
                 departmentName: departmentName.toString()
             };
+            console.log(check);
+            callAjax(check, data)
+            // console.log('edit')
 
-            console.log({ data });
-            $.ajax({
-                url: 'data/main.php?action=addCus',
-                data: data,
-                type: 'POST',
-                success: (res) => {
-                    response = JSON.parse(res);
-                    console.log(response);
-                    if (response.status == true) {
-                        $("#tb_customer").DataTable().ajax.reload();
-                        toastr.success(response.msg, 'Info', {
-                            timeOut: 800, onHidden: function () {
-                                $('#modalUser').modal('hide');
-                            }
-                        })
-                    } else {
-                        toastr.error(response.msg, 'Info')
-                    }
-                }
-            })
+            // $.ajax({
+            //     url: 'data/main.php?action=addCus',
+            //     data: data,
+            //     type: 'POST',
+            //     success: (res) => {
+            //         response = JSON.parse(res);
+            //         console.log(response);
+            //         if (response.status == true) {
+            //             $("#tb_customer").DataTable().ajax.reload();
+            //             toastr.success(response.msg, 'Info', {
+            //                 timeOut: 800, onHidden: function () {
+            //                     $('#modalUser').modal('hide');
+            //                 }
+            //             })
+            //         } else {
+            //             toastr.error(response.msg, 'Info')
+            //         }
+            //     }
+            // })
         }
     });
+
 }
 
 async function editCus() {
-
+    check = 'edit';
     let table = $("#tb_customer").DataTable();
     let row = getSelectedRow(table);
     if (row == undefined) {
@@ -171,27 +187,125 @@ async function editCus() {
 
 
         $("#modalCusTitle").html("Edit customer")
-        await $("#modalCus").modal("show")
+        $("#modalCus").modal("show")
 
-
-        console.log({ row })
-        for (let item in row) {
-            if (item == 'gender') {
-                if (row[item] == "Female") {
-                    // console.log('1');
-                    // $(`#${item} option[value='0']`).attr('selected', 'selected');
-                    $(`#gender`).val(0);
-                } else {
-                    // $(`#${item} option[value='1']`).attr('selected', 'selected');
-                    $(`#gender`).val(1);
-
-                }
-            }
-            $(`#${item}`).val(row[item]);
+        $("#fullName").val(row.fullName);
+        $('#birthday').css('color', 'black');
+        $("#birthday").val(moment(row.birthday).format('YYYY-MM-DD'));
+        if (row.gender == 'Female') {
+            $("#gender").val(0);
+        } else {
+            $("#gender").val(1);
         }
-        $("#birthday").val('2022/02/17')
-    }
+        $("#email").val(row.email);
+        $("#jobPositionLevel").val(row.jobLevel)
+        let arrDepartment = row.relatedDepartment.split(',');
+        $('#timezone').val(row.timezone);
+        $('#timezone').select2().trigger('change');
+        $("#relatedDeparment").val(arrDepartment);
+        $('#relatedDeparment').select2().trigger('change');
+        $('#id_cus').val(row.id)
 
+        let validator = $("#create_cus").validate({
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                fullName: {
+                    required: true,
+                    maxlength: 30
+                },
+                birthday: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+
+                },
+                gender: {
+                    required: true,
+                },
+                timezone: {
+                    required: true,
+                },
+                jobLevelPosition: {
+                    required: true,
+                },
+                relatedDepartment: {
+                    required: true,
+                }
+            },
+            messages: {
+                fullName: {
+                    required: "(*) Vui lòng nhập full name!",
+                    maxlength: "(*) Nhập tối đa 30 ký tự!"
+                },
+                birthday: {
+                    required: "(*) Vui lòng nhập birthday!",
+                    minlength: "(*) Nhập ít nhất 3 ký tự!"
+                },
+                email: {
+                    required: "(*) Vui lòng nhập email!",
+                },
+                gender: {
+                    required: "(*) Vui lòng nhập gender!",
+                },
+                timezone: {
+                    required: "(*) Vui lòng nhập timezone!",
+                },
+                jobLevelPosition: {
+                    required: "(*) Vui lòng nhập job position level!",
+                },
+                relatedDepartment: {
+                    required: "(*) Vui lòng nhập related department!",
+                },
+            },
+            submitHandler: function () {
+
+
+                let department = $('#relatedDeparment').select2("val");
+                let selected = $('#relatedDeparment').select2("data");
+                let departmentName = [];
+                for (var i = 0; i <= selected.length - 1; i++) {
+                    departmentName.push(selected[i].text);
+                }
+                let data = {
+                    id: $("#id_cus").val(),
+                    fullName: $("#fullName").val(),
+                    birthday: $("#birthday").val(),
+                    email: $("#email").val(),
+                    gender: $("#gender").val(),
+                    jobPositionLevel: $("#jobPositionLevel").val(),
+                    timezone: $("#timezone").val(),
+                    nameTimezone: $("#timezone option:selected").text(),
+                    relatedDepartment: department.toString(),
+                    departmentName: departmentName.toString()
+                };
+                console.log(check);
+                callAjax(check, data);
+                // $.ajax({
+                //     url: 'data/main.php?action=editCus',
+                //     data: data,
+                //     type: 'POST',
+                //     success: (res) => {
+                //         response = JSON.parse(res);
+                //         console.log(response);
+                //         if (response.status == true) {
+                //             $("#tb_customer").DataTable().ajax.reload();
+                //             toastr.success(response.msg, 'Info', {
+                //                 timeOut: 800, onHidden: function () {
+                //                     $('#modalUser').modal('hide');
+                //                 }
+                //             })
+                //         } else {
+                //             toastr.error(response.msg, 'Info')
+                //         }
+                //     }
+                // })
+            }
+        });
+
+    }
 }
 
 
@@ -220,6 +334,28 @@ function removeCus() {
             }
         })
     }
+}
+function callAjax(check, data) {
+    data.id = $('#id_cus').val();
+    $.ajax({
+        url: `data/main.php?action=${check}Cus`,
+        data: data,
+        type: 'POST',
+        success: (res) => {
+            response = JSON.parse(res);
+            console.log(response);
+            if (response.status == true) {
+                $("#tb_customer").DataTable().ajax.reload();
+                toastr.success(response.msg, 'Info', {
+                    timeOut: 800, onHidden: function () {
+                        $('#modalUser').modal('hide');
+                    }
+                })
+            } else {
+                toastr.error(response.msg, 'Info')
+            }
+        }
+    })
 }
 
 function getSelectedRow(table) {
