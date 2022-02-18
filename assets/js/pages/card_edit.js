@@ -53,7 +53,7 @@ $(document).ready(function() {
                     if (response.status == true) {
                         toastr.success(response.msg, 'Info', {
                             timeOut: 800, onHidden: function () {
-                                window.location.href ='../modules/card_setting.php';
+                                window.location.href ='./modules/card_setting.php';
                             }
                         })
                     } else {
