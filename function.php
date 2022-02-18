@@ -155,7 +155,8 @@ function addcontent($year, $verion, $content, $mailsj, $box)
         mailSubject,
         box,
         createdBy,
-        createdAt
+        createdAt,
+        isDefault
         
     )
     VALUES
@@ -166,7 +167,8 @@ function addcontent($year, $verion, $content, $mailsj, $box)
         '$mailsj',
         '$box',
         'nam',
-       GETDATE()
+       GETDATE(),
+       '0'
     )";
     $rs = odbc_exec($con, $sql);
     if (odbc_num_rows($rs) > 0) {
@@ -241,6 +243,7 @@ function getCustomer()
     };
     return json_encode($result);
 }
+
 function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName)
 {
     global $con;
@@ -267,7 +270,7 @@ function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTime
         )
         VALUES
         (
-            '$fullName',
+            N'$fullName',
             '$birthday',
             '$email',
             '$gender',
@@ -365,8 +368,8 @@ function addManager($fullName, $displayName, $email, $department) {
             )
             VALUES
             (
-                '$fullName',
-                '$displayName',
+                N'$fullName',
+                N'$displayName',
                 '$email',
                 '$department',
                 '',
@@ -413,4 +416,66 @@ function removeManager($email)
     } else {
         return  json_encode(array('status' => false, 'msg' => 'Data error!'));
     }
+}
+// return $result;
+function updatedefaultbg($id, $year)
+{
+    global $con;
+    $sql = "UPDATE GC_Background SET isDefault = 0 WHERE year= $year;UPDATE GC_Background SET isDefault = 1 WHERE id= $id";
+    // echo $sql;
+    $rs = odbc_exec($con, $sql);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Update success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+
+function getversion($year, $db)
+{
+    global $con;
+    $sql = "SELECT MAX(version)+1 FROM $db WHERE YEAR = '$year'";
+    $rs = odbc_exec($con, $sql);
+    $rs = odbc_result($rs, 1);
+    if ($rs == null) {
+        $rs = 1;
+    }
+    return $rs;
+}
+
+function getyearhavecard()
+{
+
+    global $con;
+    $result = [];
+    $sql = "SELECT year FROM GC_Background GROUP BY year";
+    $rs = odbc_exec($con, $sql);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
+}
+
+function updatedefaultcontent($id, $year)
+{
+    global $con;
+    $sql = "UPDATE GC_CardContent SET isDefault = 0 WHERE year= $year;UPDATE GC_CardContent SET isDefault = 1 WHERE id= $id";
+    // echo $sql;
+    $rs = odbc_exec($con, $sql);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Update success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+function getContentDefault($year)
+{
+    global $con;
+    $result = array();
+    $sql = "SELECT TOP 1 * FROM GC_CardContent WHERE YEAR = '$year' AND isDefault = '1'";
+    $rs = odbc_exec($con, $sql);
+    while (@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    };
+    return json_encode($result);
 }

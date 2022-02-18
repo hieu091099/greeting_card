@@ -55,6 +55,7 @@ $rs  = odbc_exec($con, $sql);
                     <div class="form-group">
                         <label for="exampleInputEmail1">Year</label>
                         <select class="form-select form-control" name="year" id="year">
+                            <option selected disabled>Chọn năm</option>
                             <?php for ($i = 2022; $i < 2030; $i++) { ?>
                                 <option value="<?= $i ?>"><?= $i ?></option>
                             <?php } ?>
@@ -62,7 +63,7 @@ $rs  = odbc_exec($con, $sql);
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Version</label>
-                        <input type="number" class="form-control" name="version" id="version" aria-describedby="emailHelp" placeholder="Enter Version">
+                        <input type="number" class="form-control" readonly name="version" id="version" aria-describedby="emailHelp" placeholder="Enter Version">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Image</label>
@@ -95,6 +96,7 @@ $rs  = odbc_exec($con, $sql);
             <th>Is Default</th>
             <th>Created By</th>
             <th>Created At</th>
+            <th></th>
 
         </tr>
     </thead>

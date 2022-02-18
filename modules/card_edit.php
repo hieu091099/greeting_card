@@ -60,7 +60,7 @@ if (isset($_GET['id'])) {
 <Textarea id="textarea">
 	<?= isset($rs) ? $rs->content : '' ?>
 </Textarea>
-<div id="card" style="width: 800px;height: 500px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');">
+<div id="card" style="width: 800px;height: 500px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
 	<?php
 	if (isset($rs)) {
 		echo html_entity_decode($rs->box . $rs->content);
@@ -73,11 +73,12 @@ if (isset($_GET['id'])) {
 	} ?>
 
 </div>
-<div class="control">
+<div class="control" style="margin-bottom: 200px;">
 	<h1>Control Box</h1>
 	<div class="form-group">
 		<label for="exampleInputEmail1">Year</label>
 		<select class="form-select form-control" name="year" id="year">
+			<option selected disabled>Chọn năm</option>
 			<?php for ($i = 2022; $i < 2030; $i++) { ?>
 				<option value="<?= $i ?>" <?= isset($rs) ? ($rs->year == $i) ? 'selected' : '' : '' ?>><?= $i ?></option>
 			<?php } ?>
@@ -85,7 +86,7 @@ if (isset($_GET['id'])) {
 	</div>
 	<div class="form-group">
 		<label for="exampleInputEmail1">Version</label>
-		<input type="number" class="form-control" name="version" id="version" placeholder="Enter Version" value="<?= isset($rs) ? $rs->version : '' ?>">
+		<input type="number" class="form-control" readonly name="version" id="version" placeholder="Enter Version" value="<?= isset($rs) ? $rs->version : '' ?>">
 	</div>
 	<div class="form-group">
 		<label for=""> CHỌN MÀU :</label>
@@ -106,6 +107,7 @@ if (isset($_GET['id'])) {
 	<button type="button" class="btn btn-success m-0 w-50" id="<?= isset($rs) ? 'sua' : 'luu' ?>" idcont="<?= isset($rs) ? $rs->id : '' ?>">Lưu</button>
 </div>
 <div style="display: none;" id="rv"></div>
+
 <script>
 	tinymce.init({
 		selector: 'textarea',

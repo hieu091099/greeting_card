@@ -14,7 +14,7 @@ $(document).ready(() => {
     loadManager();
 })
 
-
+let check = "";
 
 function getSelectedRow(table) {
     return table.rows('.selected').data()[0];
@@ -22,10 +22,7 @@ function getSelectedRow(table) {
 
 
 function addManager() {
-    $("#create_manager").removeData("validator");
-    $("#create_manager").removeData("unobtrusiveValidation");
-
-
+    check = "add";
     $('#modalManager').modal('show');
     $('#modalManagerTitle').html('Add New Manager');
     $('#input-fullname').val('');
@@ -69,25 +66,8 @@ function addManager() {
             }
         },
         submitHandler: function () {
-            $.ajax({
-                url: 'data/main.php?action=addManager',
-                data: $('#create_manager').serialize(),
-                type: 'POST',
-                success: (res) => {
-                    response = JSON.parse(res);
-                    console.log(response);
-                    if (response.status == true) {
-                        $("#tb_manager").DataTable().ajax.reload();
-                        toastr.success(response.msg, 'Info', {
-                            timeOut: 800, onHidden: function () {
-                                $('#modalManager').modal('hide');
-                            }
-                        })
-                    } else {
-                        toastr.error(response.msg, 'Info')
-                    }
-                }
-            })
+            let data = $('#create_manager').serialize()
+            callAjax(check, data);
         }
     });
     validator.resetForm();
@@ -95,6 +75,7 @@ function addManager() {
 
 
 function editManager() {
+    check = "edit";
     $("#create_manager").removeData("validator");
     $("#create_manager").removeData("unobtrusiveValidation");
     // $.validator.unobtrusive.parse("#create_manager");
@@ -147,25 +128,9 @@ function editManager() {
             },
             submitHandler: function () {
 
-                $.ajax({
-                    url: 'data/main.php?action=editManager',
-                    data: $('#create_manager').serialize(),
-                    type: 'POST',
-                    success: (res) => {
-                        response = JSON.parse(res);
-                        console.log(response);
-                        if (response.status == true) {
-                            $("#tb_manager").DataTable().ajax.reload();
-                            toastr.success(response.msg, 'Info', {
-                                timeOut: 800, onHidden: function () {
-                                    $('#modalManager').modal('hide');
-                                }
-                            })
-                        } else {
-                            toastr.error(response.msg, 'Info')
-                        }
-                    }
-                })
+                let data = $('#create_manager').serialize()
+                callAjax(check, data);
+
             }
         });
         validator.resetForm();
@@ -174,7 +139,27 @@ function editManager() {
 }
 
 
-
+function callAjax(check, data) {
+    $.ajax({
+        url: `data/main.php?action=${check}Manager`,
+        data: data,
+        type: 'POST',
+        success: (res) => {
+            response = JSON.parse(res);
+            console.log(response);
+            if (response.status == true) {
+                $("#tb_manager").DataTable().ajax.reload();
+                toastr.success(response.msg, 'Info', {
+                    timeOut: 800, onHidden: function () {
+                        $('#modalManager').modal('hide');
+                    }
+                })
+            } else {
+                toastr.error(response.msg, 'Info')
+            }
+        }
+    })
+}
 
 
 function removeManager() {

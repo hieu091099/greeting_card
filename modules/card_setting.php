@@ -100,9 +100,11 @@
             <th>Version</th>
             <th>Content</th>
             <th>Mail Subject</th>
+            <th>Is Default</th>
             <th>Created By</th>
             <th>Created At</th>
             <th></th>
+
 
 
         </tr>
@@ -135,6 +137,8 @@
                 },
                 {
                     "data": "mailSubject"
+                }, {
+                    "data": "isDefault"
                 },
                 {
                     "data": "createdBy"
@@ -158,7 +162,52 @@
                     return `<a href='./modules/card_edit.php?id=${row.id}' class='btn btn-info text-white'>Edit</a>`;
                 },
                 "targets": 6
+            }, {
+                "render": function(data, type, row) {
+                    if (row.isDefault == 0) {
+                        return ` <button type="button" class="btn btn-secondary" onclick='setdefault(${row.id},${row.year})'>Set Default</button>`;
+                    } else {
+                        return '';
+                    }
+                },
+                "targets": 7
+            }, {
+                // The `data` parameter refers to the data for the cell (defined by the
+                // `data` option, which defaults to the column being worked with, in
+                // this case `data: 0`.
+                "render": function(data, type, row) {
+                    if (data == 1) {
+                        return '✔️';
+                    } else {
+                        return '❌';
+                    }
+                    // return `<img class='rvimg' src="./uploads/${data}" />`;
+                },
+                "targets": 4
             }]
+        });
+    }
+
+    function setdefault(id, year) {
+        $.ajax({
+            url: 'data/main.php?action=updatedefaultcontent',
+            data: {
+                "idbg": id,
+                year: year
+            },
+            type: 'POST',
+            success: (res) => {
+                response = JSON.parse(res);
+                console.log(response);
+                if (response.status == true) {
+                    toastr.success(response.msg, 'Info', {
+                        timeOut: 800
+                    })
+                    $("#tb_user").DataTable().ajax.reload();
+                } else {
+                    toastr.error(response.msg, 'Info')
+                }
+            }
         });
     }
 </Script>

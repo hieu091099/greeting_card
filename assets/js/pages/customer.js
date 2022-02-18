@@ -73,6 +73,9 @@ function loadCus() {
 function addCus() {
     check = "add";
     clearForm("#create_cus");
+    $('#timezone').val(null).trigger('change');
+    $('#relatedDeparment').val(null).trigger('change');
+    $('#birthday').css('color', 'black');
     $("#modalCusTitle").html("Add customer")
     $("#modalCus").modal("show");
     let validator = $("#create_cus").validate({
@@ -149,29 +152,8 @@ function addCus() {
                 relatedDepartment: department.toString(),
                 departmentName: departmentName.toString()
             };
-            console.log(check);
-            callAjax(check, data)
-            // console.log('edit')
 
-            // $.ajax({
-            //     url: 'data/main.php?action=addCus',
-            //     data: data,
-            //     type: 'POST',
-            //     success: (res) => {
-            //         response = JSON.parse(res);
-            //         console.log(response);
-            //         if (response.status == true) {
-            //             $("#tb_customer").DataTable().ajax.reload();
-            //             toastr.success(response.msg, 'Info', {
-            //                 timeOut: 800, onHidden: function () {
-            //                     $('#modalUser').modal('hide');
-            //                 }
-            //             })
-            //         } else {
-            //             toastr.error(response.msg, 'Info')
-            //         }
-            //     }
-            // })
+            callAjax(check, data);
         }
     });
 
@@ -281,27 +263,7 @@ async function editCus() {
                     relatedDepartment: department.toString(),
                     departmentName: departmentName.toString()
                 };
-                console.log(check);
                 callAjax(check, data);
-                // $.ajax({
-                //     url: 'data/main.php?action=editCus',
-                //     data: data,
-                //     type: 'POST',
-                //     success: (res) => {
-                //         response = JSON.parse(res);
-                //         console.log(response);
-                //         if (response.status == true) {
-                //             $("#tb_customer").DataTable().ajax.reload();
-                //             toastr.success(response.msg, 'Info', {
-                //                 timeOut: 800, onHidden: function () {
-                //                     $('#modalUser').modal('hide');
-                //                 }
-                //             })
-                //         } else {
-                //             toastr.error(response.msg, 'Info')
-                //         }
-                //     }
-                // })
             }
         });
 
