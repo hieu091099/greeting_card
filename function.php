@@ -313,3 +313,15 @@ function updatedefaultbg($id, $year)
         return  json_encode(array('status' => false, 'msg' => 'Data error!'));
     }
 }
+
+function getversion($year, $db)
+{
+    global $con;
+    $sql = "SELECT MAX(version)+1 FROM $db WHERE YEAR = '$year'";
+    $rs = odbc_exec($con, $sql);
+    $rs = odbc_result($rs, 1);
+    if ($rs == null) {
+        $rs = 1;
+    }
+    return $rs;
+}

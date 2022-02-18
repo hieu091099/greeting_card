@@ -107,3 +107,8 @@ if ($action == 'updatedefaultbg') {
     $res = updatedefaultbg($_POST['idbg'], $_POST['year']);
     echo $res;
 }
+
+if ($action == 'getversion') {
+    $res = getversion($_POST['year'], $_POST['db']);
+    echo $res;
+}

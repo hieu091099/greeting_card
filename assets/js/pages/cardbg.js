@@ -46,7 +46,7 @@ function add() {
         },
         messages: {
             version: {
-                required: "(*) Vui lòng nhập Version"
+                required: "(*) Vui lòng chọn năm"
             },
             filebg: {
                 required: "(*) Vui lòng tải hình ảnh"
@@ -196,4 +196,15 @@ function loaddata() {
     });
 
     // ☑️❌✖️✔️✅✅
+
+    $('#year').change(()=>{
+        $.ajax({
+            url: 'data/main.php?action=getversion',
+            data: { "year": $('#year').val(),"db": 'GC_Background' },
+            type: 'POST',
+            success: (res) => {
+                $('#version').val(res);
+            }
+        });
+    }); 
 }

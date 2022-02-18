@@ -108,6 +108,17 @@ $(document).ready(function() {
                                 $('#card').css('background-image',`url('./uploads/${res.image}')`)
                                 
                             }
-                        })
+                        });
+                       
+                        $.ajax({
+                            url: 'data/main.php?action=getversion',
+                            data: { "year": $('#year').val(),"db": 'GC_CardContent' },
+                            type: 'POST',
+                            success: (res) => {
+                                $('#version').val(res);
+                            }
+                        });
                     });
+
+                    
 });
