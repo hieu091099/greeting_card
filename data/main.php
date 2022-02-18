@@ -112,3 +112,14 @@ if ($action == 'getversion') {
     $res = getversion($_POST['year'], $_POST['db']);
     echo $res;
 }
+
+if ($action == 'updatedefaultcontent') {
+    $res = updatedefaultcontent($_POST['idbg'], $_POST['year']);
+    echo $res;
+}
+
+if ($action == "getContentDefault") {
+    // echo $_POST['mailsj'];
+    $res = getContentDefault($_POST['year']);
+    print_r($res);
+}

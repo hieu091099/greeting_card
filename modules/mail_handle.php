@@ -3,7 +3,6 @@ $year = getyearhavecard();
 $year = json_decode($year);
 $cus = getCustomer();
 $cus = json_decode($cus);
-print_r($cus);
 
 ?>
 <!-- [ breadcrumb ] start -->
@@ -31,7 +30,7 @@ print_r($cus);
 		<?php
 		foreach ($cus as $cus) {
 		?>
-			<option value="<?= $cus->id ?>"><?= $cus->fullName ?></option>
+			<option value="<?= $cus->fullName ?>" fullname="<?= $cus->fullName ?>"><?= $cus->fullName ?></option>
 			<?php
 		}
 			?>>
@@ -50,16 +49,7 @@ print_r($cus);
 	<button type="button" class="btn btn-primary" id="generate">Generate</button>
 </div>
 <div id="card" style="width: 800px;height: 500px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
-	<?php
-	if (isset($rs)) {
-		echo html_entity_decode($rs->box . $rs->content);
-	} else {
-	?>
-		<div id="text" class="text" style="width: 400px; 
-        height: 200px;background-color: rgba(0, 0, 0, 0.267);overflow: hidden;padding: 20px;overflow-wrap: break-word;"></div>
-	<?php
 
-	} ?>
 
 </div>
 <?php require('../footer.php'); ?>
@@ -67,7 +57,7 @@ print_r($cus);
 	$(document).ready(function() {
 		$('#generate').click(() => {
 			console.log($('#year').val());
-			console.log($('#person').val());
+			console.log($('#person').attr('fullname'));
 			$.ajax({
 				url: 'data/main.php?action=getImageDefault',
 				data: {
@@ -77,6 +67,27 @@ print_r($cus);
 				success: (res) => {
 					res = JSON.parse(res)[0];
 					$('#card').css('background-image', `url('./uploads/${res.image}')`)
+
+				}
+			});
+			$.ajax({
+				url: 'data/main.php?action=getContentDefault',
+				data: {
+					year: $('#year').val()
+				},
+				type: 'POST',
+				success: (res) => {
+					res = JSON.parse(res)[0];
+					var today = new Date();
+					var dd = String(today.getDate()).padStart(2, '0');
+					var mm = String(today.getMonth() + 1).padStart(2, '0');
+					var yyyy = today.getFullYear();
+
+					today = dd + '/' + mm + '/' + yyyy;
+					data = $('<textarea />').html(res.box + res.content).text();
+					data = data.replace('{Customer_Name}', $('#person').val());
+					data = data.replace('{Date}', '2001');
+					$('#card').html(data);
 
 				}
 			});

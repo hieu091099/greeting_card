@@ -73,7 +73,7 @@ if (isset($_GET['id'])) {
 	} ?>
 
 </div>
-<div class="control">
+<div class="control" style="margin-bottom: 200px;">
 	<h1>Control Box</h1>
 	<div class="form-group">
 		<label for="exampleInputEmail1">Year</label>
@@ -107,6 +107,7 @@ if (isset($_GET['id'])) {
 	<button type="button" class="btn btn-success m-0 w-50" id="<?= isset($rs) ? 'sua' : 'luu' ?>" idcont="<?= isset($rs) ? $rs->id : '' ?>">Lưu</button>
 </div>
 <div style="display: none;" id="rv"></div>
+
 <script>
 	tinymce.init({
 		selector: 'textarea',
