@@ -163,9 +163,9 @@ function addcontent($year, $verion, $content, $mailsj, $box)
     (
         '$year',
         '$verion',
-        '$content',
+        N'$content',
         '$mailsj',
-        '$box',
+        N'$box',
         'nam',
        GETDATE(),
        '0'
@@ -202,9 +202,9 @@ function editcontent($id, $year, $verion, $content, $mailsj, $box)
         -- id -- this column value is auto-generated
         [year] ='$year',
         version = '$verion',
-        [content] = '$content',
+        [content] = N'$content',
         mailSubject = '$mailsj',
-        box = '$box'
+        box = N'$box'
     WHERE id = $id ";
     $rs = odbc_exec($con, $sql);
     if (odbc_num_rows($rs) > 0) {
@@ -478,4 +478,16 @@ function getContentDefault($year)
         array_push($result, $row);
     };
     return json_encode($result);
+}
+
+function removeCt($id)
+{
+    global $con;
+    $delete = "DELETE  FROM GC_CardContent WHERE id = $id";
+    $rs = odbc_exec($con, $delete);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Delete success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
 }

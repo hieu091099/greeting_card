@@ -175,3 +175,10 @@ if ($action == "getContentDefault") {
     $res = getContentDefault($_POST['year']);
     print_r($res);
 }
+
+if ($action == "removeCt") {
+    $idbg = $_POST['id'];
+
+    $res = removeCt($idbg);
+    echo $res;
+}

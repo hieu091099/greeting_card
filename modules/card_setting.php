@@ -210,4 +210,33 @@
             }
         });
     }
+
+    function getSelectedRow(table) {
+        return table.rows('.selected').data()[0];
+    }
+
+    function remove() {
+        let table = $("#tb_user").DataTable();
+        let row = getSelectedRow(table);
+        console.log(row);
+        $.ajax({
+            url: 'data/main.php?action=removeCt',
+            data: {
+                "id": row.id
+            },
+            type: 'POST',
+            success: (res) => {
+                response = JSON.parse(res);
+                console.log(response);
+                if (response.status == true) {
+                    toastr.success(response.msg, 'Info', {
+                        timeOut: 800
+                    })
+                    $("#tb_user").DataTable().ajax.reload();
+                } else {
+                    toastr.error(response.msg, 'Info')
+                }
+            }
+        })
+    }
 </Script>
