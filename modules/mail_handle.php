@@ -49,17 +49,16 @@ $cus = json_decode($cus);
 		?>
 	</select>
 	<button type="button" class="btn btn-primary" id="generate">Generate</button>
+	<button type="button" class="btn btn-success" id="download">Gửi</button>
 </div>
 <div id="cards" style="width: 1000px;height: 600px">
-	<div id="card" style="width: 1000px;height: 600px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
+	<div id="card" style="width: 1000px;height: 600px;overflow: hidden;background-image: url('<?= isset($imgdf) ? 'http://localhost/greetingcard/uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
 
 
 	</div>
 </div>
 
-<img id='previewImage' />
 
-<button type="button" class="btn btn-primary" id="download">Gửi</button>
 
 <?php require('../footer.php'); ?>
 <script>
@@ -75,7 +74,7 @@ $cus = json_decode($cus);
 				type: 'POST',
 				success: (res) => {
 					res = JSON.parse(res)[0];
-					$('#card').css('background-image', `url('../uploads/${res.image}')`)
+					$('#card').css('background-image', `url('http://localhost/greetingcard/uploads/${res.image}')`)
 
 				}
 			});

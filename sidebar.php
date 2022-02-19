@@ -24,7 +24,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/greetingcard/language/language.php');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <base href="http://localhost:8088/greetingcard/">
+    <base href="http://localhost/greetingcard/">
     <!-- Favicon icon -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <!-- fontawesome icon -->
@@ -36,7 +36,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/greetingcard/language/language.php');
     <!-- vendor css -->
     <!-- Material Design Bootstrap -->
     <link rel="stylesheet" href="assets/css/mdb.min.css">
-    <link rel="stylesheet" href="assets/css/select2.min.css"  />
+    <link rel="stylesheet" href="assets/css/select2.min.css" />
     <link rel="stylesheet" href="assets/DataTables/datatables.min.css">
     <link rel="stylesheet" href="assets/DataTables/FixedHeader-3.2.1/css/fixedHeader.bootstrap4.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
