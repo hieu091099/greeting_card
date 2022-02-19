@@ -6,6 +6,7 @@ $cus = json_decode($cus);
 
 ?>
 <!-- [ breadcrumb ] start -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.js" integrity="sha512-sn/GHTj+FCxK5wam7k9w4gPPm6zss4Zwl/X9wgrvGMFbnedR8lTUSLdsolDRBRzsX6N+YgG6OWyvn9qaFVXH9w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <div class="page-header">
 	<div class="page-block">
 		<div class="row align-items-center">
@@ -48,16 +49,23 @@ $cus = json_decode($cus);
 	</select>
 	<button type="button" class="btn btn-primary" id="generate">Generate</button>
 </div>
-<div id="card" style="width: 800px;height: 500px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
+<div id="cards" style="width: 1000px;height: 600px">
+	<div id="card" style="width: 1000px;height: 600px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
 
 
+	</div>
 </div>
+
+<img id='previewImage' />
+
+<button type="button" class="btn btn-primary" id="download">Gửi</button>
+
 <?php require('../footer.php'); ?>
 <script>
 	$(document).ready(function() {
 		$('#generate').click(() => {
-			console.log($('#year').val());
-			console.log($('#person').attr('fullname'));
+			// console.log($('#year').val());
+			// console.log($('#person').attr('fullname'));
 			$.ajax({
 				url: 'data/main.php?action=getImageDefault',
 				data: {
@@ -66,7 +74,7 @@ $cus = json_decode($cus);
 				type: 'POST',
 				success: (res) => {
 					res = JSON.parse(res)[0];
-					$('#card').css('background-image', `url('./uploads/${res.image}')`)
+					$('#card').css('background-image', `url('../uploads/${res.image}')`)
 
 				}
 			});
@@ -90,6 +98,21 @@ $cus = json_decode($cus);
 					$('#card').html(data);
 
 				}
+			});
+		});
+		jQuery.fn.outerHTML = function() {
+			return jQuery('<div />').append(this.eq(0).clone()).html();
+		};
+		$("#download").on('click', function() {
+			// // img
+			// // 
+			// // contents
+			// console.log($("#cards").html());
+			html2canvas(document.querySelector("#cards")).then(canvas => {
+				var data = canvas.toDataURL();
+				// $("#previewImage").attr('src', data);
+				console.log(data);
+				// console.log(data);
 			});
 		});
 	});
