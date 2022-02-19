@@ -7,6 +7,7 @@ $cus = json_decode($cus);
 ?>
 <!-- [ breadcrumb ] start -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.js" integrity="sha512-sn/GHTj+FCxK5wam7k9w4gPPm6zss4Zwl/X9wgrvGMFbnedR8lTUSLdsolDRBRzsX6N+YgG6OWyvn9qaFVXH9w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="http://danml.com/js/download.js"></script>
 <div class="page-header">
 	<div class="page-block">
 		<div class="row align-items-center">
@@ -103,6 +104,8 @@ $cus = json_decode($cus);
 		jQuery.fn.outerHTML = function() {
 			return jQuery('<div />').append(this.eq(0).clone()).html();
 		};
+
+
 		$("#download").on('click', function() {
 			// // img
 			// // 
@@ -112,7 +115,6 @@ $cus = json_decode($cus);
 				var data = canvas.toDataURL();
 				// $("#previewImage").attr('src', data);
 				console.log(data);
-				// console.log(data);
 			});
 		});
 	});
