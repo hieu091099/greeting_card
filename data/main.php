@@ -73,6 +73,22 @@ if ($action == "addCus") {
     echo $res;
 }
 
+if($action == "editCus"){
+    $id       = $_POST['id'];
+    $fullName = $_POST['fullName'];
+    $birthday = $_POST['birthday'];
+    $email    = $_POST['email'];
+    $gender   = $_POST['gender'];
+    $jobLevel = $_POST['jobPositionLevel'];
+    $timezone = $_POST['timezone'];
+    $nameTimezone = $_POST['nameTimezone'];
+    $relatedDepartment = $_POST['relatedDepartment'];
+    $departmentName = $_POST['departmentName'];
+
+    $res = editCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName, $id);
+    echo $res;
+}
+
 if ($action == "removeCus") {
     $fullName = $_POST['fullName'];
     $birthday = $_POST['birthday'];
@@ -103,6 +119,43 @@ if ($action == "getImageDefault") {
     print_r($res);
 }
 
+
+
+
+
+//Manager
+if($action == "addManager") {
+    $fullName       = $_POST['fullName'];
+    $displayName    = $_POST['displayName'];
+    $email          = $_POST['email'];
+    $department     = $_POST['department'];
+
+    $res = addManager($fullName, $displayName, $email, $department);
+    echo $res;
+}
+
+if($action == "editManager") {
+    $id             = $_POST['id'];
+    $fullName       = $_POST['fullName'];
+    $displayName    = $_POST['displayName'];
+    $email          = $_POST['email'];
+    $department     = $_POST['department'];
+
+    $res = editManager($fullName, $displayName, $email, $department, $id);
+    echo $res;
+}
+
+if ($action == "removeManager") {
+    $email = $_POST['email'];
+
+    $res = removeManager($email);
+    echo $res;
+}
+
+if ($action == "getManager") {
+    $res = getManager();
+    echo $res;
+}
 if ($action == 'updatedefaultbg') {
     $res = updatedefaultbg($_POST['idbg'], $_POST['year']);
     echo $res;

@@ -232,7 +232,7 @@ function getCustomer()
 {
     global $con;
     $result = array();
-    $select = "SELECT id,fullName, birthday, email, nameTimezone, departmentName, createdBy, createdAt, jobLevel,
+    $select = "SELECT id, fullName, birthday, email, timezone, nameTimezone, relatedDepartment, departmentName, createdBy, createdAt, jobLevel,
     CASE WHEN gender = 0 THEN 'Female' ELSE 'Male' END gender, 
     CASE WHEN [status] = 1 THEN 'Active' ELSE 'Quit' END [status],
     CONVERT(VARCHAR, birthday,111) birthdayCus
@@ -243,6 +243,7 @@ function getCustomer()
     };
     return json_encode($result);
 }
+
 function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName)
 {
     global $con;
@@ -269,7 +270,7 @@ function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTime
         )
         VALUES
         (
-            '$fullName',
+            N'$fullName',
             '$birthday',
             '$email',
             '$gender',
@@ -291,10 +292,124 @@ function addCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTime
     }
 }
 
+function editCustomer($fullName, $birthday, $email, $gender, $timezone, $nameTimezone, $jobLevel, $relatedDepartment, $departmentName, $id)
+{
+    global $con;
+    $createdBy = $_SESSION['username'];
+    $sql_check = "SELECT * FROM GC_Customer WHERE fullName = '$fullName' AND birthday = '$birthday'";
+    $rs_check  = odbc_exec($con, $sql_check);
+    if (odbc_num_rows($rs_check) > 0) {
+        return  json_encode(array('status' => false, 'msg' => 'Customer already exists, cannnot modify!'));
+    }else{
+        $insert = "UPDATE GC_Customer 
+                    SET 
+                        fullName = '$fullName', 
+                        birthday = '$birthday', 
+                        email = '$email', 
+                        gender = '$gender', 
+                        timezone = '$timezone', 
+                        nameTimezone = '$nameTimezone',
+                        jobLevel = '$jobLevel',
+                        relatedDepartment = '$relatedDepartment',
+                        departmentName = '$departmentName'
+                    WHERE id = '$id' ";
+        $rs = odbc_exec($con, $insert); //echo $insert;
+        if (odbc_num_rows($rs) > 0) {
+            return  json_encode(array('status' => true, 'msg' => 'Edit success!'));
+        } else {
+            return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+        }
+    }
+    
+}
+
 function removeCustomer($fullName, $birthday, $email)
 {
     global $con;
     $delete = "DELETE  FROM GC_Customer WHERE fullName = '$fullName' AND birthday = '$birthday' and email = '$email'";
+    $rs = odbc_exec($con, $delete);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Delete success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+    // return $result;
+
+
+    //Manager
+function getManager() {
+    global $con;
+    $select = "SELECT * FROM GC_Manager";
+    $result = array();
+    $rs = odbc_exec($con, $select);
+    while(@$row = odbc_fetch_object($rs)) {
+        array_push($result, $row);
+    }
+    return json_encode($result);
+}
+
+
+function addManager($fullName, $displayName, $email, $department) {
+    global $con;
+    $check_exist = "SELECT * FROM GC_Manager WHERE email = '$email'";
+    $rs_check = odbc_exec($con, $check_exist);
+    if (odbc_num_rows($rs_check) > 0) {
+        return  json_encode(array('status' => false, 'msg' => 'Email already exist!'));
+    } else {
+         $insert = "INSERT INTO GC_Manager
+            (
+                fullName,
+                displayName,
+                email,
+                department,
+                createdBy,
+                createdAt
+            )
+            VALUES
+            (
+                N'$fullName',
+                N'$displayName',
+                '$email',
+                '$department',
+                '',
+                GETDATE()
+            )";
+            $rs = odbc_exec($con, $insert);
+            if (odbc_num_rows($rs) > 0) {
+                return  json_encode(array('status' => true, 'msg' => 'Add success!'));
+            } else {
+                return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+            }
+    }
+}
+
+function editManager($fullName, $displayName, $email, $department, $id) {
+    global $con;
+    $update = " UPDATE GC_Manager
+    SET 
+        fullName = '$fullName',
+        displayName = '$displayName',
+        email = '$email',
+        department = '$department',
+        createdBy = '',
+        createdAt = GETDATE()
+        WHERE id = '$id'
+    ";
+    // echo $update;
+    $rs = odbc_exec($con, $update);
+    if (odbc_num_rows($rs) > 0) {
+        return  json_encode(array('status' => true, 'msg' => 'Edit success!'));
+    } else {
+        return  json_encode(array('status' => false, 'msg' => 'Data error!'));
+    }
+}
+
+function removeManager($email)
+{
+    global $con;
+    $delete = "DELETE FROM GC_Manager WHERE email = '$email'";
+    // echo $delete;
     $rs = odbc_exec($con, $delete);
     if (odbc_num_rows($rs) > 0) {
         return  json_encode(array('status' => true, 'msg' => 'Delete success!'));

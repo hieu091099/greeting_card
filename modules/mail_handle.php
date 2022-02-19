@@ -112,9 +112,22 @@ $cus = json_decode($cus);
 			// // contents
 			// console.log($("#cards").html());
 			html2canvas(document.querySelector("#cards")).then(canvas => {
-				var data = canvas.toDataURL();
+				console.log(canvas)
+				var data = canvas.toDataURL("image/png");
 				// $("#previewImage").attr('src', data);
-				console.log(data);
+				$.ajax({
+					url: 'data/saveImage.php',
+					type: 'POST',
+					data: {
+						data: data
+					},
+					success: function(res) {
+						console.log('test')
+						console.log(res);
+					}
+				})
+				// console.log(data);
+				// console.log(data);
 			});
 		});
 	});
