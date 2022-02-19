@@ -21,6 +21,7 @@
 	<button class="btn btn-primary mr-0" onclick="addManager()">Add</button>
 	<button class="btn btn-info mr-0" onclick="editManager()">Edit</button>
 	<button class="btn btn-danger mr-0" onclick="removeManager()">Remove</button>
+	<input type="hidden" id="id_mg">
 </div>
 
 <!-- Modal User Modal Right -->
@@ -81,11 +82,12 @@
 <table id="tb_manager" class="table table-striped table-bordered " style="width:100%">
         <thead>
             <tr>
+				<th>ID</th>
                 <th>Name</th>
                 <th>Display Name</th>
                 <th>Email</th>
                 <th>Department</th>
-                <th>User Date</th>
+                <th>Created At</th>
             </tr>
         </thead>
 </table>

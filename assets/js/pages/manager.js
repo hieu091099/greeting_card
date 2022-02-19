@@ -91,6 +91,7 @@ function editManager() {
         $('#input-displayName').val(row.displayName);
         $('#input-email').val(row.email);
         $('#input-department').val(row.department);
+        $("#id_mg").val(row.id);
 
         let validator = $('#create_manager').validate({
             onfocusout: false,
@@ -140,6 +141,8 @@ function editManager() {
 
 
 function callAjax(check, data) {
+    data += '&id=' + $("#id_mg").val();
+    // console.log({ data })
     $.ajax({
         url: `data/main.php?action=${check}Manager`,
         data: data,
@@ -200,11 +203,19 @@ function loadManager() {
             }
         },
         "columns": [
+            { "data": "id" },
             { "data": "fullName" },
             { "data": "displayName" },
             { "data": "email" },
             { "data": "department" },
             { "data": "createdAt" }
+        ],
+        "columnDefs": [
+            {
+                "targets": [0],
+                "visible": false
+            },
+
         ],
         select: true
     });

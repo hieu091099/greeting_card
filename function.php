@@ -384,7 +384,7 @@ function addManager($fullName, $displayName, $email, $department) {
     }
 }
 
-function editManager($fullName, $displayName, $email, $department) {
+function editManager($fullName, $displayName, $email, $department, $id) {
     global $con;
     $update = " UPDATE GC_Manager
     SET 
@@ -394,7 +394,7 @@ function editManager($fullName, $displayName, $email, $department) {
         department = '$department',
         createdBy = '',
         createdAt = GETDATE()
-        WHERE email = '$email'
+        WHERE id = '$id'
     ";
     // echo $update;
     $rs = odbc_exec($con, $update);

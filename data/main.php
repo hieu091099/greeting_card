@@ -135,12 +135,13 @@ if($action == "addManager") {
 }
 
 if($action == "editManager") {
+    $id             = $_POST['id'];
     $fullName       = $_POST['fullName'];
     $displayName    = $_POST['displayName'];
     $email          = $_POST['email'];
     $department     = $_POST['department'];
 
-    $res = editManager($fullName, $displayName, $email, $department);
+    $res = editManager($fullName, $displayName, $email, $department, $id);
     echo $res;
 }
 
