@@ -60,7 +60,7 @@ if (isset($_GET['id'])) {
 <Textarea id="textarea">
 	<?= isset($rs) ? $rs->content : '' ?>
 </Textarea>
-<div id="card" style="width: 800px;height: 500px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
+<div id="card" style="width: 1000px;height: 600px;overflow: hidden;background-image: url('<?= isset($imgdf) ? './uploads/' . $imgdf[0]->image : '' ?>');background-size: 100% 100%;">
 	<?php
 	if (isset($rs)) {
 		echo html_entity_decode($rs->box . $rs->content);
