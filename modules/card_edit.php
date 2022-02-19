@@ -67,7 +67,7 @@ if (isset($_GET['id'])) {
 	} else {
 	?>
 		<div id="text" class="text" style="width: 400px; 
-        height: 200px;background-color: rgba(0, 0, 0, 0.267);overflow: hidden;padding: 20px;overflow-wrap: break-word;"></div>
+        height: 200px;background-color: rgba(0, 0, 0, 0.267);padding: 20px;overflow-wrap: break-word;"></div>
 	<?php
 
 	} ?>
